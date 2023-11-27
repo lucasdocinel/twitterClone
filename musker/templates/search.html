@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+    <h1>Search meeps!</h1>
+    <br/><br/>
+
+   
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="input" class="form-control" name="search" placeholder="Search">
+
+            <br/><br/>
+
+            <button type="submit" class="btn btn-secondary">Meep!</button>
+        </form>
+        <br/><br/>
+
+{% if search %}
+
+<h3>You Searched for: {{ search }}</h3>
+
+{% for meep in searched %}
+
+<div class="alert alert-dark" role="alert">
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+                {% if meep.user.profile.profile_image %}
+                    <img src="{{ meep.user.profile.profile_image.url }}" width="50" height="50" class="rounded-circle" alt="{{ profile.user.username }}">
+                {% else %}
+                    <img src="{% static 'images/default_profile.jpg' %}" width="50" height="50" class="rounded-circle" alt="{{ profile.user.username }}">
+                {% endif %}
+            </div>
+
+            <div class="col-md-11">
+                {{ meep.body }}<br/>
+                <small class="text-mudet">
+                    {{ meep.created_at }} By
+                    <a href="{% url 'profile' meep.user.id %}">
+                        @{{ meep.user.username }}
+                    </a>
+                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;
+
+                    &nbsp;&nbsp;
+                    <a href="{% url 'meep_show' meep.id %}"><img src="{% static 'images/compartilhar.png' %}" height="20" width="20" srcset=""></a>
+                    
+                </small>
+            </div>
+
+        </div>
+    </div>
+        </div>
+        <br/>
+
+
+{% endfor %}
+{% else %}
+<h3>Forbidden: {{ search }}</h3>
+{% endif %}
+
+{% endblock %}
