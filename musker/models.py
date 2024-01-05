@@ -12,6 +12,7 @@ from django.conf import settings
 class Meep(models.Model):
     user = models.ForeignKey(User, related_name='meeps',on_delete=models.DO_NOTHING)
     body = models.CharField(max_length=200, blank=True)
+    image = models.ImageField(upload_to='images/meep_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='meep_like', blank=True)
     

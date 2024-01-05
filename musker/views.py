@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 def home(request):
     if request.user.is_authenticated:
-        form = MeepForm(request.POST or None)
+        form = MeepForm(request.POST or None, request.FILES or None)
         if request.method == 'POST':
             if form.is_valid():
                 meep = form.save(commit=False)

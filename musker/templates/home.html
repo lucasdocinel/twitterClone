@@ -31,7 +31,10 @@
             </div>
 
             <div class="col-md-11">
-                {{ meep.body }}<br/>
+                {{ meep.body }}<br><br>
+                {% if meep.image %}
+                    <img id="meepImage{{ meep.id }}" src="{{ meep.image.url }}" width="300" height="300" class="img-fluid rounded-start" alt="{{ meep.user.username }}" onclick="expandImage('meepImage{{ meep.id }}')">
+                {% endif %}<br>
                 <small class="text-mudet">
                     {{ meep.created_at }} By
                     <a href="{% url 'profile' meep.user.id %}">
@@ -66,7 +69,7 @@
     <br/><br/><br/><br/>
 
     {% if form %}
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }} 
 
